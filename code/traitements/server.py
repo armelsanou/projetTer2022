@@ -77,6 +77,7 @@ def fetch_details(id_list):
 
 # Recherche et chargement des articles trouvés sur pubmed
 def load_articles(keyword='fever', n_articles = 100):
+	print("searched value", keyword)
 	results = search(keyword, n_articles) # fever
 	id_list = results['IdList']
 	papers = fetch_details(id_list)

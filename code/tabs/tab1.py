@@ -72,6 +72,7 @@ file_content = None
 
 
 def display(display_type, search, term, number, norm, clean, user_stopwords):
+	print("****params*****", display_type,search,term,number,norm,clean,user_stopwords)
 	global df
 	global n_clicks
 	global text
@@ -80,15 +81,20 @@ def display(display_type, search, term, number, norm, clean, user_stopwords):
 	global word_cloud
 	global corr
 	valeur = ""
+	#df = None vider à chaque recherche
 	if file_content is not None and term is not None:
 		valeur = file_content
+		print("valeur zone text et document", file_content)
 	elif term is not None:
 		valeur = term
+		print("valeur zone text", term)
 	elif file_content is not None:
-		valeur = file_content
-	print("valeur", valeur)
+		valeur = str(file_content)
+		print("valeur file", valeur)
 	
 	if df is None: # Pas besoin de refaire une recherche
+
+		print("search", search)
 		
 		if search == 0:
 			return server.home()
@@ -96,6 +102,7 @@ def display(display_type, search, term, number, norm, clean, user_stopwords):
 		elif search != 0 and valeur is not None:
 			if number <= 0:
 				df = server.load_articles(valeur)
+				print("******valllllll******", valeur)
 				
 			else:
 				df = server.load_articles(valeur, number*10)
