@@ -40,6 +40,7 @@ from sklearn.metrics import confusion_matrix
 from coclust.visualization import plot_convergence
 from coclust.visualization import plot_delta_kl
 from coclust.visualization import plot_confusion_matrix
+import time
 
  # Lemmatisation
 
@@ -53,7 +54,7 @@ def home():
 		)
 
 # Recherche de l'existance de documents suivant un mot clé
-def search(query, n_articles):
+""" def search(query, n_articles):
     Entrez.email = 'biljolefa@gmail.com'
     handle = Entrez.esearch(db='pubmed', 
                             sort='relevance', 
@@ -61,7 +62,18 @@ def search(query, n_articles):
                             retmode='xml', 
                             term=query)
     results = Entrez.read(handle)
-    return results
+    return results """
+
+#Recherche des documents suivant une liste de mots clés A & D
+def search(query, n_articles):
+	#print("-----------liste de mots ----------", query)
+	results = []
+	Entrez.email = 'biljolefa@gmail.com'
+	for q in query:
+		handle = Entrez.esearch(db='pubmed', sort='relevance', retmax=str(n_articles), retmode='xml', term=q)
+		results.append(Entrez.read(handle))
+		time.sleep(2)
+	return results
 
 
 # Charger le résultat de la recherche, les articles trouvés suivant le mot clé
@@ -77,13 +89,26 @@ def fetch_details(id_list):
 
 # Recherche et chargement des articles trouvés sur pubmed
 def load_articles(keyword='fever', n_articles = 100):
-	print("searched value", keyword)
+
+	#Plot corpus size evolution peer number on keywords
+
 	results = search(keyword, n_articles) # fever
-	id_list = results['IdList']
+	#print("--------- result dans load --------------", results)
+	#id_list = results['IdList']
+	#results = search(keyword, n_articles) # fever
+	id_list = []
+	for re in results:
+		#print("-------------------------------------re--------------------------------", re)
+		id_list.append(str(re['IdList']).strip('[]'))
+	#print("----------------- id list --------------------", id_list)
 	papers = fetch_details(id_list)
 	articles = dict()
-	for paper in papers['PubmedArticle']:
-		articles[paper['MedlineCitation']['Article']['ArticleTitle']] = ','.join(paper['MedlineCitation']['Article']['Abstract']['AbstractText'])
+	for article in papers['PubmedArticle']:
+		#print("-----clefs--------", article['MedlineCitation']['Article'].keys())
+		#articles[paper['MedlineCitation']['Article']['ArticleTitle']] = ','.join(paper['MedlineCitation']['Article']['Abstract']['AbstractText'])
+		if 'Abstract' in article['MedlineCitation']['Article'].keys():
+			articles[article['MedlineCitation']['Article']['ArticleTitle']] = ','.join(article['MedlineCitation']['Article']['Abstract']['AbstractText'])
+	#print(articles)
 	return pd.DataFrame(articles, index=[0])
 
 

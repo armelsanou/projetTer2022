@@ -102,10 +102,12 @@ layout = html.Div([
             ],
         ),
                     
-         #dbc.Button("Apply",color="primary", className="mr-1", id = 'apply', C=0)        
-         dbc.Button("Apply",color="primary", className="mr-1", id = 'apply')        
+            #dbc.Button("Apply",color="primary", className="mr-1", id = 'apply', C=0)
+            dbc.Button("Apply",color="primary", className="mr-1", id = 'apply'),
+
+            dbc.Button("Export",color="secondary", className="mr-1", id = 'export') 
                 
-            ])),
+        ])),
     ], width=3)# End col
     ,dbc.Col(html.Div([
             dcc.Tabs(id="tabs", value='tab-1', children=[

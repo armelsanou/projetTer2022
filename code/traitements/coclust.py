@@ -1,6 +1,7 @@
 from coclust.coclustering import CoclustMod
 from coclust.coclustering import CoclustSpecMod
 from coclust.evaluation.internal import best_modularity_partition
+import dash_bootstrap_components as dbc
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -9,11 +10,22 @@ import matplotlib.pyplot as plt
 
 from io import BytesIO
 import base64
+#Armel don't forget that you have to update the code for all coclust algorithm by adding try catch for the case that only one document is found
 def coclustmod(dtm, n_clusters = 2):
-	coclust = CoclustMod(n_clusters)
-	coclust.fit(dtm.to_numpy())
-	
-	return coclust
+  try:
+    coclust = CoclustMod(n_clusters)
+    coclust.fit(dtm.to_numpy())
+    
+    return coclust
+  except:
+    print("only one found")
+
+    return dbc.Container(
+      dbc.Alert("Only one document was found during your research, can not apply clustering on one element", 
+            is_open=True,
+            duration=4000,color="warning"),
+      className="p-5",
+      )
 	
 
 def coclustspecmod(df, n_clusters = 2):
