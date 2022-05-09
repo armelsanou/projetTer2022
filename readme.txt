@@ -1,3 +1,5 @@
+****Running with docker*****
+
 ## Configure and run TER project by Armel Sanou
 
 This is a simple way for deploying on server using flask, gunicorn and docker
@@ -19,3 +21,7 @@ This is a simple way for deploying on server using flask, gunicorn and docker
 3. docker-compose up
 ```
 Then, If you built it localy visit: 127.0.0.1:5000 otherwise, use your server ip xxx.xxx.xxx.xxx:5000 to see the dashboard.
+
+
+
+##After doing that, you can also navigate to code  foler, and run pyhton index.py
