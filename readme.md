@@ -24,8 +24,11 @@ Then, If you built it localy visit: 127.0.0.1:5000 otherwise, use your server ip
 
 
 
-##After doing that, you can also navigate to folder named code (projetTer2022/code/), and run pyhton index.py
+## Running project
+
+After doing that, you can also navigate to folder named code (projetTer2022/code/), and run pyhton index.py
 
 
+## Important
 
-##Do not forget that, each research you dou within interface generate word into corpus.txt file who is in the current folder.
+Do not forget that, each research you dou within interface generate word into corpus.txt file who is in the current folder.
